@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTasks } from '../context/TaskContext.jsx';
 import { CommentSection } from '../components/CommentSection.jsx';
+import { formatDate, formatShortDate, formatFileSize, isOverdue } from '../utils/formatters.js';
 
 const STATUS_META = {
   todo: { label: 'To Do', cls: 'badge-todo' },
@@ -15,28 +16,6 @@ const PRIORITY_META = {
   high: { label: 'High', cls: 'badge-high' },
 };
 
-function formatDate(iso) {
-  if (!iso) return '—';
-  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(iso));
-}
-
-function formatShortDate(dateStr) {
-  if (!dateStr) return '—';
-  return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(
-    new Date(dateStr + 'T00:00:00'),
-  );
-}
-
-function formatFileSize(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
-}
-
-function isOverdue(deadline, status) {
-  if (!deadline || status === 'completed') return false;
-  return new Date(deadline + 'T00:00:00') < new Date();
-}
 
 export function TaskDetailPage() {
   const { id } = useParams();

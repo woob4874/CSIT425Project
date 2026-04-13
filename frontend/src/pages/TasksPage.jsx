@@ -94,6 +94,11 @@ export function TasksPage() {
     updateTask(task.id, { status: next });
   };
 
+  const handleCloseForm = () => {
+    setShowForm(false);
+    setEditingTask(null);
+  };
+
   const openNew = () => {
     setEditingTask(null);
     setShowForm(true);
@@ -151,7 +156,7 @@ export function TasksPage() {
       <button className="fab" onClick={openNew} aria-label="New task">+</button>
 
       {showForm && (
-        <TaskForm key={editingTask?.id || 'new'} task={editingTask} onSave={handleSave} onClose={() => { setShowForm(false); setEditingTask(null); }} />
+        <TaskForm key={editingTask?.id || 'new'} task={editingTask} onSave={handleSave} onClose={handleCloseForm} />
       )}
     </div>
   );

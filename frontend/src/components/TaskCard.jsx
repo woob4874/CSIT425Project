@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { formatCardDate, isOverdue, formatTime } from '../utils/formatters.js';
 
 const STATUS_META = {
   todo: { label: 'To Do', cls: 'badge-todo' },
@@ -20,25 +21,6 @@ const CATEGORY_ICONS = {
   Education: '📚',
   Other: '📌',
 };
-
-function formatDate(dateStr) {
-  if (!dateStr) return null;
-  const d = new Date(dateStr + 'T00:00:00');
-  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(d);
-}
-
-function isOverdue(deadline, status) {
-  if (!deadline || status === 'completed') return false;
-  return new Date(deadline + 'T00:00:00') < new Date();
-}
-
-function formatTime(minutes) {
-  if (!minutes) return null;
-  if (minutes < 60) return `${minutes}m`;
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return m ? `${h}h ${m}m` : `${h}h`;
-}
 
 export function TaskCard({ task, onEdit, onDelete, onToggleStatus }) {
   const navigate = useNavigate();
@@ -92,7 +74,7 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus }) {
       <div className="task-card-meta">
         {task.deadline && (
           <span className={`task-deadline${overdue ? ' overdue' : ''}`}>
-            📅 {formatDate(task.deadline)}{overdue ? ' · Overdue' : ''}
+            📅 {formatCardDate(task.deadline)}{overdue ? ' · Overdue' : ''}
           </span>
         )}
         {task.timeSpent > 0 && (

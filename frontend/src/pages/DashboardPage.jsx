@@ -4,17 +4,7 @@ import { useTasks } from '../context/TaskContext.jsx';
 import { useAppAuth } from '../context/AuthContext.jsx';
 import { ProgressStats } from '../components/ProgressStats.jsx';
 import { TaskForm } from '../components/TaskForm.jsx';
-
-function formatDate(dateStr) {
-  if (!dateStr) return '—';
-  const d = new Date(dateStr + 'T00:00:00');
-  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(d);
-}
-
-function isOverdue(deadline, status) {
-  if (!deadline || status === 'completed') return false;
-  return new Date(deadline + 'T00:00:00') < new Date();
-}
+import { formatShortDate, isOverdue } from '../utils/formatters.js';
 
 const STATUS_META = {
   todo: { label: 'To Do', cls: 'badge-todo' },
@@ -108,7 +98,7 @@ export function DashboardPage() {
                         </span>
                       </td>
                       <td className={overdue ? 'text-danger' : ''}>
-                        {formatDate(t.deadline)}
+                        {formatShortDate(t.deadline)}
                         {overdue && <span className="overdue-tag"> ⚠️</span>}
                       </td>
                     </tr>

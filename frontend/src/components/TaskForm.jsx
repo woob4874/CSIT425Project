@@ -39,9 +39,6 @@ export function TaskForm({ task, onSave, onClose }) {
   const validate = () => {
     const errs = {};
     if (!form.title.trim()) errs.title = 'Title is required.';
-    if (form.deadline && new Date(form.deadline) < new Date(new Date().toDateString()) && form.status !== 'completed') {
-      // allow past deadlines (user may be logging old tasks) — no hard error
-    }
     return errs;
   };
 

@@ -407,7 +407,7 @@ ul { list-style: none; }
 .task-row-title:hover { color: var(--primary); }
 .task-row-cat { font-size: 11px; color: var(--text-light); }
 .text-danger { color: var(--danger); }
-.overdue-tag { }
+.overdue-tag { margin-left: 2px; }
 
 .deadline-list { display: flex; flex-direction: column; gap: 10px; }
 .deadline-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
